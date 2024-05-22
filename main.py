@@ -1,5 +1,6 @@
-from fpdf import FPDF
 import os
+import argparse
+from fpdf import FPDF
 
 class PDF(FPDF):
     def header(self):
@@ -71,6 +72,7 @@ def parse_whatsapp_chat(file_path, image_base_path):
 def create_pdf(chat_data, output_path):
     pdf = PDF()
     pdf.add_page()
+
     font_path = r"C:\Windows\Fonts"
     pdf.add_font('Arial', '', os.path.join(font_path, 'arial.ttf'), uni=True)
     pdf.add_font('Arial', 'B', os.path.join(font_path, 'arialbd.ttf'), uni=True)
@@ -87,9 +89,12 @@ def create_pdf(chat_data, output_path):
     pdf.output(output_path)
 
 if __name__ == "__main__":
-    input_file = r"E:\PycharmProjects\senswise\‎Emlakçı İbrahim KURTULUŞ ile WhatsApp Sohbeti.txt"
-    image_base_path = r"E:\PycharmProjects\senswise"
-    output_file = os.path.expanduser(r"E:\PycharmProjects\senswise\whatsapp_chat_history.pdf")
+    parser = argparse.ArgumentParser(description='WhatsApp chat to PDF converter.')
+    parser.add_argument('input_file', type=str, help='Path to the input text file containing WhatsApp chat.')
+    parser.add_argument('image_base_path', type=str, help='Base path for images referenced in the chat.')
+    parser.add_argument('output_file', type=str, help='Path to the output PDF file.')
 
-    chat_data = parse_whatsapp_chat(input_file, image_base_path)
-    create_pdf(chat_data, output_file)
+    args = parser.parse_args()
+
+    chat_data = parse_whatsapp_chat(args.input_file, args.image_base_path)
+    create_pdf(chat_data, args.output_file)
