@@ -71,8 +71,6 @@ def parse_whatsapp_chat(file_path, image_base_path):
 def create_pdf(chat_data, output_path):
     pdf = PDF()
     pdf.add_page()
-
-    # Sistem fontlarını kullanarak Arial fontunu ekleyin
     font_path = r"C:\Windows\Fonts"
     pdf.add_font('Arial', '', os.path.join(font_path, 'arial.ttf'), uni=True)
     pdf.add_font('Arial', 'B', os.path.join(font_path, 'arialbd.ttf'), uni=True)
